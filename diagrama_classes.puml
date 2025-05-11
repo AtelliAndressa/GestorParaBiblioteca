@@ -1,0 +1,128 @@
+@startuml
+
+' Estilo do diagrama
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor White
+    ArrowColor Black
+    BorderColor Black
+}
+
+' Classes do Modelo
+class Livro {
+    -id: int
+    -titulo: String
+    -autor: String
+    -genero: String
+    -editora: String
+    -ano: int
+    -disponivel: boolean
+    -dataDevolucao: LocalDate
+    +getTitulo(): String
+    +getAutor(): String
+    +getGenero(): String
+    +getEditora(): String
+    +getAno(): int
+    +isDisponivel(): boolean
+    +getDataDevolucao(): LocalDate
+    +setDisponivel(boolean)
+    +setDataDevolucao(LocalDate)
+    +toString(): String
+}
+
+class Biblioteca {
+    -livros: List<Livro>
+    +adicionarLivro(Livro)
+    +buscarLivros(String): List<Livro>
+    +emprestarLivro(int): boolean
+    +devolverLivro(int): boolean
+    +getLivrosAtrasados(): List<Livro>
+    +getTodosLivros(): List<Livro>
+}
+
+' Classes do Controlador
+class BibliotecaController {
+    -biblioteca: Biblioteca
+    +adicionarLivro(String, String, String, String, int)
+    +buscarLivros(String): List<Livro>
+    +emprestarLivro(int): boolean
+    +devolverLivro(int): boolean
+    +getLivrosAtrasados(): List<Livro>
+    +getTodosLivros(): List<Livro>
+}
+
+' Classes da Interface
+class InterfaceBiblioteca {
+    -controller: BibliotecaController
+    -campoBusca: JTextField
+    -areaResultados: JTextArea
+    -campoTitulo: JTextField
+    -campoAutor: JTextField
+    -campoGenero: JTextField
+    -campoEditora: JTextField
+    -campoAno: JTextField
+    +inicializarInterface()
+    -configurarEventos()
+    -adicionarLivro()
+    -buscarLivros()
+    -emprestarLivro()
+    -devolverLivro()
+    -listarLivrosAtrasados()
+}
+
+' Classes do Banco de Dados
+class LivroDAO {
+    +criarTabela()
+    +adicionarLivro(Livro)
+    +buscarLivros(String): List<Livro>
+    +emprestarLivro(int): boolean
+    +devolverLivro(int): boolean
+    +getLivrosAtrasados(): List<Livro>
+    +getTodosLivros(): List<Livro>
+}
+
+class ConexaoBD {
+    -{static} url: String
+    -{static} usuario: String
+    -{static} senha: String
+    +{static} getConexao(): Connection
+}
+
+' Relacionamentos
+Biblioteca "1" *-- "0..*" Livro
+BibliotecaController --> Biblioteca
+InterfaceBiblioteca --> BibliotecaController
+LivroDAO --> ConexaoBD
+Biblioteca --> LivroDAO
+
+note right of Livro
+  Representa um livro no sistema
+  com seus atributos e métodos
+end note
+
+note right of Biblioteca
+  Gerencia a coleção de livros
+  e suas operações
+end note
+
+note right of BibliotecaController
+  Coordena as interações entre
+  a interface e o modelo
+end note
+
+note right of InterfaceBiblioteca
+  Interface gráfica do usuário
+  com campos e botões
+end note
+
+note right of LivroDAO
+  Gerencia o acesso ao banco
+  de dados SQL Server
+end note
+
+note right of ConexaoBD
+  Gerencia a conexão com
+  o banco de dados
+end note
+
+@enduml 

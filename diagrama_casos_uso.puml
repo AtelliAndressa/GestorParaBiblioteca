@@ -1,0 +1,59 @@
+@startuml Biblioteca
+
+skinparam actorStyle awesome
+skinparam packageStyle rectangle
+skinparam usecaseStyle roundbox
+
+' Definindo os atores
+actor Bibliotecario as "Bibliotecário"
+actor Usuario as "Usuário"
+
+' Definindo o sistema
+rectangle "Sistema de Gestão de Biblioteca" {
+    ' Casos de uso do Bibliotecário
+    usecase "Cadastrar Livro" as UC1
+    usecase "Pesquisar Livro" as UC2
+    usecase "Realizar Empréstimo" as UC3
+    usecase "Realizar Devolução" as UC4
+    usecase "Consultar Histórico de Empréstimos" as UC5
+}
+
+' Relacionamentos do Bibliotecário
+Bibliotecario --> UC1
+Bibliotecario --> UC2
+Bibliotecario --> UC3
+Bibliotecario --> UC4
+Bibliotecario --> UC5
+
+' Relacionamentos do Usuário
+Usuario --> UC2
+Usuario --> UC5
+
+' Incluindo descrições dos casos de uso
+note right of UC1
+  Permite adicionar novos livros
+  ao acervo com informações
+  completas (título, autor, etc.)
+end note
+
+note right of UC2
+  Busca livros por palavras-chave
+  em título, autor, gênero ou editora
+end note
+
+note right of UC3
+  Registra o empréstimo de um livro
+  e define data de devolução
+end note
+
+note right of UC4
+  Registra a devolução do livro
+  e atualiza o status
+end note
+
+note right of UC5
+  Visualiza histórico de
+  empréstimos e devoluções
+end note
+
+@enduml 
